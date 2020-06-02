@@ -1,0 +1,313 @@
+define({ "api": [
+  {
+    "type": "post",
+    "url": "/api/users/login",
+    "title": "",
+    "name": "Login_a_user",
+    "group": "Auth",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "username",
+            "description": "<p><strong>Required</strong> | <em>Unique</em> | Must match an existing user</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p><strong>Required</strong> | Must match password of username</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 201 Created\n{\n  \"message\": \"Registration successful potatochip!\",\n  \"id\": 31501823437723\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthenticationFailed",
+            "description": "<p>User credentials are not valid.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400\n{\n  \"message\": \"Failed to login\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./auth/users/users-router.js",
+    "groupTitle": "Auth"
+  },
+  {
+    "type": "post",
+    "url": "/api/users/register",
+    "title": "",
+    "name": "Register_a_user",
+    "group": "Auth",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "username",
+            "description": "<p><strong>Required</strong> | <em>Unique</em> | The desired username of a new user</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p><strong>Required</strong> | A password of at least 6 characters</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "email",
+            "description": "<p><em>Unique</em> | A valid email of a user</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 201 Created\n{\n  \"message\": \"Registration successful potatochip!\",\n  \"id\": 31501823437723\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UniqueUsernameError",
+            "description": "<p>The <code>req.body.user_name</code> is already in database.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400\n{\n  errorMessage: \"Username already in use!\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./auth/users/users-router.js",
+    "groupTitle": "Auth"
+  },
+  {
+    "type": "get",
+    "url": "/users/:user_id/get-ratings",
+    "title": "",
+    "name": "Get_Movie_Ratings",
+    "group": "Ratings",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 201 Created\n[\n  {\n    \"id\": 3999,\n    \"date\": \"2020-03-17T05:00:00.000Z\",\n    \"name\": \"Lilo & Stitch\",\n    \"year\": 2002,\n    \"rating\": 5,\n    \"poster_url\": \"/tVaEulzowKhMhDvHNNYb9rNEZPB.jpg\"\n  },\n  {\n    \"id\": 6117,\n    \"date\": \"2020-03-24T05:00:00.000Z\",\n    \"name\": \"Some Like It Hot\",\n    \"year\": 1959,\n    \"rating\": 3,\n    \"poster_url\": \"/pxc9EFCMYkItESpqqrI783yl8Gh.jpg\"\n  },\n  {\n    \"id\": 3998,\n    \"date\": \"2020-03-17T05:00:00.000Z\",\n    \"name\": \"Ice Age\",\n    \"year\": 2002,\n    \"rating\": 3.5,\n    \"poster_url\": \"/zpaQwR0YViPd83bx1e559QyZ35i.jpg\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "MissingBodyReqs",
+            "description": "<p>The <code>req.body.param</code> was not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400\n{\n  message: \"Please send a movie name with this request.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./users_movie_data/groa-user-router.js",
+    "groupTitle": "Ratings"
+  },
+  {
+    "type": "post",
+    "url": "/users/:user_id/add-movie-rating",
+    "title": "",
+    "name": "Rate_a_Movie",
+    "group": "Ratings",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p><strong>Required</strong> | Title of the movie you want to rate.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "integer",
+            "optional": false,
+            "field": "year",
+            "description": "<p><strong>Required</strong> | The year the movie was made.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "rating",
+            "description": "<p><strong>Required</strong> | The rating, can be 0 - 5 and accepts 3.5</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 201 Created\n{\n  \"id\": 4006,\n  \"date\": \"2020-03-17T05:00:00.000Z\",\n  \"name\": \"Young Frankenstein\",\n  \"year\": 1974,\n  \"rating\": 4,\n  \"user_id\": 48485\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "MissingBodyReqs",
+            "description": "<p>The <code>req.body.param</code> was not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400\n{\n  message: \"Please send a movie name with this request.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./users_movie_data/groa-user-router.js",
+    "groupTitle": "Ratings"
+  },
+  {
+    "type": "get",
+    "url": "/users/:user_id/recommendation-history",
+    "title": "",
+    "name": "Get_ALL_Previously_Recommended_Movies",
+    "group": "Recommendations",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 Ok\n{\n  \"user_id\": 48485452324,\n  \"recommendation_id\": \"a39c6ee234beecf3e708267a8fd56efde2907\",\n  \"recommendation_json\": [\n    {\n      \"Title\": \"That Obscure Object of Desire\",\n      \"Year\": 1977,\n      \"IMDB URL\": \"https://www.imdb.com/title/tt0075824/\",\n      \"Mean Rating\": 7.9,\n      \"Votes\": 18958,\n      \"Similarity\": 0.5469637513160706,\n      \"ID\": \"0075824\",\n      \"Gem\": false,\n      \"Poster URL\": \"/9iUdC4dftkjYSBUJq5DAxC6WqB9.jpg\"\n    },\n    {\n      \"Title\": \"La Dolce Vita\",\n      \"Year\": 1960,\n      \"IMDB URL\": \"https://www.imdb.com/title/tt0053779/\",\n      \"Mean Rating\": 8,\n      \"Votes\": 61072,\n      \"Similarity\": 0.5398253202438354,\n      \"ID\": \"0053779\",\n      \"Gem\": false,\n      \"Poster URL\": \"/mZJ25Th65B2KXM57uIiEzO3Aw81.jpg\"\n    },\n      \"date\": \"2020-03-26T19:55:09.835Z\",\n      \"model_type\": \"ratings model\"\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./recommendations/recommendations-router.js",
+    "groupTitle": "Recommendations"
+  },
+  {
+    "type": "get",
+    "url": "/users/:user_id/recommended",
+    "title": "",
+    "name": "Get_Already_Recommended_Movies",
+    "group": "Recommendations",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 Ok\n{\n  \"recommendation_json\": [\n    {\n      \"Title\": \"That Obscure Object of Desire\",\n      \"Year\": 1977,\n      \"IMDB URL\": \"https://www.imdb.com/title/tt0075824/\",\n      \"Mean Rating\": 7.9,\n      \"Votes\": 18958,\n      \"Similarity\": 0.5469637513160706,\n      \"ID\": \"0075824\",\n      \"Gem\": false,\n      \"Poster URL\": \"/9iUdC4dftkjYSBUJq5DAxC6WqB9.jpg\"\n    },\n    {\n      \"Title\": \"La Dolce Vita\",\n      \"Year\": 1960,\n      \"IMDB URL\": \"https://www.imdb.com/title/tt0053779/\",\n      \"Mean Rating\": 8,\n      \"Votes\": 61072,\n      \"Similarity\": 0.5398253202438354,\n      \"ID\": \"0053779\",\n      \"Gem\": false,\n      \"Poster URL\": \"/mZJ25Th65B2KXM57uIiEzO3Aw81.jpg\"\n    }\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./recommendations/recommendations-router.js",
+    "groupTitle": "Recommendations"
+  },
+  {
+    "type": "get",
+    "url": "/users/:user_id/recommendations",
+    "title": "",
+    "name": "Get_New_Movie_Recommendations",
+    "group": "Recommendations",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 Ok\n{\n  \"recommendation_json\": [\n    {\n      \"Title\": \"That Obscure Object of Desire\",\n      \"Year\": 1977,\n      \"IMDB URL\": \"https://www.imdb.com/title/tt0075824/\",\n      \"Mean Rating\": 7.9,\n      \"Votes\": 18958,\n      \"Similarity\": 0.5469637513160706,\n      \"ID\": \"0075824\",\n      \"Gem\": false,\n      \"Poster URL\": \"/9iUdC4dftkjYSBUJq5DAxC6WqB9.jpg\"\n    },\n    {\n      \"Title\": \"La Dolce Vita\",\n      \"Year\": 1960,\n      \"IMDB URL\": \"https://www.imdb.com/title/tt0053779/\",\n      \"Mean Rating\": 8,\n      \"Votes\": 61072,\n      \"Similarity\": 0.5398253202438354,\n      \"ID\": \"0053779\",\n      \"Gem\": false,\n      \"Poster URL\": \"/mZJ25Th65B2KXM57uIiEzO3Aw81.jpg\"\n    },\n    {\n      \"Title\": \"Shadows\",\n      \"Year\": 1958,\n      \"IMDB URL\": \"https://www.imdb.com/title/tt0053270/\",\n      \"Mean Rating\": 7.3,\n      \"Votes\": 9380,\n      \"Similarity\": 0.5341751575469971,\n      \"ID\": \"0053270\",\n      \"Gem\": false,\n      \"Poster URL\": \"/emSTzEr2qdo3lV14ZQ3uIYsqHJS.jpg\"\n    },\n    {\n      \"Title\": \"Torment\",\n      \"Year\": 1944,\n      \"IMDB URL\": \"https://www.imdb.com/title/tt0036914/\",\n      \"Mean Rating\": 7.3,\n      \"Votes\": 2968,\n      \"Similarity\": 0.526555597782135,\n      \"ID\": \"0036914\",\n      \"Gem\": false,\n      \"Poster URL\": \"/6QYS8bquBzpnRatOfMDXqB7ECU.jpg\"\n    },\n    {\n      \"Title\": \"Stagecoach\",\n      \"Year\": 1939,\n      \"IMDB URL\": \"https://www.imdb.com/title/tt0031971/\",\n      \"Mean Rating\": 7.9,\n      \"Votes\": 39835,\n      \"Similarity\": 0.5156384110450745,\n      \"ID\": \"0031971\",\n      \"Gem\": false,\n      \"Poster URL\": \"/wvyS90AJsztvX5wxpDSjURad9yl.jpg\"\n    }\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./recommendations/recommendations-router.js",
+    "groupTitle": "Recommendations"
+  },
+  {
+    "type": "get",
+    "url": "/",
+    "title": "",
+    "name": "Test_if_Server_is_Running",
+    "group": "Server",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n\n\"Welcome to the Backend of Groa\"",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500\n\n\"Error: Couldn't connect to server\"",
+          "type": "string"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/server.js",
+    "groupTitle": "Server"
+  }
+] });
